@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+8f530b901dbfdae422373450983805e8 GuitarAmp_artefacts/JuceLibraryCode/GuitarAmp/PkgInfo
+c182397fcc5d3718ef001afa2594a46c GuitarAmp_artefacts/JuceLibraryCode/JuceHeader.h
