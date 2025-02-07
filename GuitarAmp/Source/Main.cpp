@@ -18,7 +18,6 @@ public:
         settingsButton.setButtonText("Audio Settings");
         settingsButton.onClick = [this] { showAudioSettings(); };
         
-        // IMPORTANT: Set up audio BEFORE initializing the device manager
         setAudioChannels(1, 2); // This must come before showing settings
         
         deviceManager.addChangeListener(this);
@@ -145,7 +144,7 @@ public:
                 for (int sample = 0; sample < bufferToFill.numSamples; ++sample)
                     outputBuffer[sample] = inputBuffer[sample] * 2.0f; // Added gain
             }
-            else // Other channels: copy from first channel
+            else // Other channels
             {
                 bufferToFill.buffer->copyFrom(channel, 0, bufferToFill.buffer->getReadPointer(0),
                                             bufferToFill.numSamples);
@@ -168,7 +167,7 @@ public:
         
         g.drawRect(meterX, meterY, meterWidth, meterHeight);
         
-        // Draw level (with increased visibility for quiet signals)
+        // Draw level
         float scaledLevel = std::min(currentInputLevel, 1.0f);
         g.fillRect(meterX, meterY, meterWidth * scaledLevel, meterHeight);
     }
@@ -177,7 +176,7 @@ public:
     {
         auto bounds = getLocalBounds();
         settingsButton.setBounds(bounds.removeFromTop(30).reduced(5));
-        debugLabel.setBounds(bounds.removeFromTop(200)); // Increased height for debug info
+        debugLabel.setBounds(bounds.removeFromTop(200));
     }
 
     void timerCallback() override
@@ -194,7 +193,7 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };
 
-// Window class to hold our component
+// Window class to hold component
 class MainWindow : public juce::DocumentWindow
 {
 public:
@@ -247,5 +246,4 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GuitarAmpApplication)
 };
 
-// This macro creates the application's main() function
 START_JUCE_APPLICATION(GuitarAmpApplication)
